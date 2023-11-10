@@ -5,9 +5,11 @@ using System.Collections;
 
 public class Database : MonoBehaviour
 {
+    // Database variables
     private IDbConnection conn;
     private string dbName = "Assets/SQL/entifarm.db";
 
+    // Objects variables
     private ArrayList plants;
 
     private void Awake()
@@ -40,7 +42,7 @@ public class Database : MonoBehaviour
         // Mientras tengamos ROWS que leer, almacenamos los datos en un array, encapsulado en el objecto Plant
         while (reader.Read())
         {
-            plants.Add(new Plant(reader.GetString(1), reader.GetFloat(2), reader.GetInt32(3), reader.GetFloat(4), reader.GetFloat(5)));
+            plants.Add(new Plant(reader.GetInt32(0), reader.GetString(1), reader.GetFloat(2), reader.GetInt32(3), reader.GetFloat(4), reader.GetFloat(5)));
         }
 
         return plants;
