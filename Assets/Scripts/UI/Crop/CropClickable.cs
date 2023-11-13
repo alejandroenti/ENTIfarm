@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CropClickable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class CropClickable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Image img;
 
@@ -11,18 +11,13 @@ public class CropClickable : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         img = gameObject.GetComponent<Image>();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        img.rectTransform.eulerAngles = Vector2.up;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        img.color = Color.white;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         img.color = Color.red;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        img.color = Color.white;
     }
 }
