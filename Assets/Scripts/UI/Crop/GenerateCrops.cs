@@ -20,7 +20,7 @@ public class GenerateCrops : MonoBehaviour
     private void Awake()
     {
         // Pedir cropsRow a la base de datos, de momento incializamos en 5
-        cropsRows = 5;
+        cropsRows = 2;
 
         // Indicamos el mayor tamaño que va a tener el parterre
         cropsMaxSize = CELL_IDEL_SIZE + CELL_IDEL_SPACING;
@@ -54,6 +54,8 @@ public class GenerateCrops : MonoBehaviour
             {
                 GameObject temp = Instantiate(cropPrefab, transform);
                 temp.transform.SetParent(transform, false);
+                temp.transform.name = "Crops_" + (i + j);
+                temp.name = "Crops_" + (i + j);
             }
         }
     }
