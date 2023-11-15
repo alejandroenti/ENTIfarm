@@ -20,7 +20,7 @@ public class GenerateCrops : MonoBehaviour
     private void Awake()
     {
         // Pedir cropsRow a la base de datos, de momento incializamos en 5
-        cropsRows = 2;
+        cropsRows = 5;
 
         // Indicamos el mayor tamaño que va a tener el parterre
         cropsMaxSize = CELL_IDEL_SIZE + CELL_IDEL_SPACING;
@@ -35,6 +35,8 @@ public class GenerateCrops : MonoBehaviour
         GenerateCropsLands();
     }
 
+    public int GetCropsRows() => cropsRows;
+
     public void SetCropsRows(int number)
     {
         cropsRows = number;
@@ -48,14 +50,17 @@ public class GenerateCrops : MonoBehaviour
         // Configuramos el tamaño de cada celda
         CalculateCellSize();
 
+        int cellsGenerated = 0;
+
         for (int i = 0; i < cropsRows; i++)
         {
             for (int j = 0; j < cropsRows; j++)
             {
                 GameObject temp = Instantiate(cropPrefab, transform);
                 temp.transform.SetParent(transform, false);
-                temp.transform.name = "Crops_" + (i + j);
-                temp.name = "Crops_" + (i + j).ToString("00000000");
+                temp.transform.name = "Crops_" + cellsGenerated.ToString("00000000");
+                temp.name = "Crops_" + cellsGenerated.ToString("00000000");
+                cellsGenerated++;
             }
         }
     }
