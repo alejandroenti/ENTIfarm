@@ -55,7 +55,7 @@ public class GenerateCrops : MonoBehaviour
                 GameObject temp = Instantiate(cropPrefab, transform);
                 temp.transform.SetParent(transform, false);
                 temp.transform.name = "Crops_" + (i + j);
-                temp.name = "Crops_" + (i + j);
+                temp.name = "Crops_" + (i + j).ToString("00000000");
             }
         }
     }
