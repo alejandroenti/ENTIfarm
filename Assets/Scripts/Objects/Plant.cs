@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Plant
 {
-    public int plantId;
+    private int plantId;
     private string plantName;
     private float growTime;
     private int stackQuantity;
