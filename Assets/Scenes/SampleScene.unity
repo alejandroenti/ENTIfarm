@@ -623,3 +623,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userPlantPrefab: {fileID: 7938957113959530064, guid: 294463123f5584541b9423571bca04f1, type: 3}
+  sprite: {fileID: 21300000, guid: 19700cfe959de4146993ffc5a0d9cecc, type: 3}

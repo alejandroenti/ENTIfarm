@@ -5,7 +5,7 @@ public class GenerateCrops : MonoBehaviour
 {
     // Hardcodeado, este el tamaño ideal en 4x4 y se tiene que escalar para los diferentes tamaños
     private const int CELL_SPACING = 8;
-    private const int CELL_IDEL_SIZE = (250 * 4);
+    private const int CELL_IDEL_SIZE = (220 * 4);
     private const int CELL_IDEL_SPACING = (CELL_SPACING * 4);
 
     [SerializeField] private GameObject cropPrefab;
