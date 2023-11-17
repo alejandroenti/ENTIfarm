@@ -16,4 +16,12 @@ public class Plant
         this.sellPrice = sellPrice;
         this.buyPrice = buyPrice;
     }
+
+    public int GetPlantID() => plantId;
+    public string GetPlantName() => plantName;
+    public float GetGrowTime() => growTime;
+    public int GetStackQuantity() => stackQuantity;
+    public float GetSellPrice() => sellPrice;
+    public float GetBuyPrice() => buyPrice;
+
 }

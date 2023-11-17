@@ -1,31 +1,41 @@
 using System.Data;
 using UnityEngine;
 using Mono.Data.Sqlite;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Database : MonoBehaviour
 {
+
+    public static Database _DATABASE;
+
     // Database variables
     private IDbConnection conn;
     private string dbName = "Assets/SQL/entifarm.db";
 
     // Objects variables
-    private ArrayList plants;
+    private List<Plant> plants;
 
     private void Awake()
     {
-        conn = new SqliteConnection(string.Format("URI=file:{0}", dbName));
-        conn.Open();
+        if (_DATABASE != null && _DATABASE != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            _DATABASE = this;
+            DontDestroyOnLoad(this);
 
-        plants = new ArrayList();
-    }
+            conn = new SqliteConnection(string.Format("URI=file:{0}", dbName));
+            conn.Open();
 
-    private void Start()
-    {
+            plants = new List<Plant>();
+        }
+
         GetAllPlants();
     }
 
-    private ArrayList GetAllPlants()
+    private List<Plant> GetAllPlants()
     {
         // Miramos si el array está vacío. En caso que no esté, retornamos el array
         if (plants.Count == 0)
@@ -46,5 +56,23 @@ public class Database : MonoBehaviour
         }
 
         return plants;
+    }
+
+    public List<Plant> GetUserPlants()
+    {
+        // Generamos la variable de la lista a retornar
+        List<Plant> userPlants = new List<Plant>();
+
+        // Nos conectamos a la base de datos y ejecutamos el comando de recibir todas las plantas
+        IDbCommand cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT plants.id_plant, plants.plant, plants.time, plants.quantity * COUNT(*) as total_quantity, plants.sell, plants.buy FROM plants_users LEFT JOIN plants ON plants.id_plant = plants_users.id_plant WHERE plants_users.id_user = 1 GROUP BY plants.id_plant;";
+        IDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            userPlants.Add(new Plant(reader.GetInt32(0), reader.GetString(1), reader.GetFloat(2), reader.GetInt32(3), reader.GetFloat(4), reader.GetFloat(5)));
+        }
+
+        return userPlants;
     }
 }
