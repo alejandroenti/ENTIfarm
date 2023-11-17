@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class GenerateCrops : MonoBehaviour
 {
     // Hardcodeado, este el tamaño ideal en 4x4 y se tiene que escalar para los diferentes tamaños
-    private const int CELL_SPACING = 16;
-    private const int CELL_IDEL_SIZE = (200 * 4);
+    private const int CELL_SPACING = 8;
+    private const int CELL_IDEL_SIZE = (250 * 4);
     private const int CELL_IDEL_SPACING = (CELL_SPACING * 4);
 
     [SerializeField] private GameObject cropPrefab;
@@ -19,8 +19,8 @@ public class GenerateCrops : MonoBehaviour
 
     private void Awake()
     {
-        // Pedir cropsRow a la base de datos, de momento incializamos en 5
-        cropsRows = 5;
+        // Pedir cropsRow a la base de datos, de momento incializamos en 4
+        cropsRows = 4;
 
         // Indicamos el mayor tamaño que va a tener el parterre
         cropsMaxSize = CELL_IDEL_SIZE + CELL_IDEL_SPACING;
