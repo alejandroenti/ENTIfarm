@@ -25,7 +25,6 @@ public class GenerateUserPlants : MonoBehaviour
             temp.transform.SetParent(transform, false);
 
             sprite = Resources.Load<Sprite>("Fruits/icons/32x32/" + userPlants[i].GetPlantID().ToString());
-            Debug.Log(sprite);
 
             temp.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
             temp.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = userPlants[i].GetPlantName();
