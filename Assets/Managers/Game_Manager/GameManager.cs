@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager _GAMEMANAGER;
 
     private GameObject plantSelected;
+    private Sprite plantSprite;
 
     private UserPlantClickable plantClickableScript;
 
@@ -21,9 +22,12 @@ public class GameManager : MonoBehaviour
             _GAMEMANAGER = this;
 
             plantSelected = null;
+            plantSprite = null;
             plantClickableScript = null;
         }
     }
+
+    public Sprite GetPlantSprite() => plantSprite;
 
     public void SelectPlant(GameObject plant)
     {
@@ -35,13 +39,15 @@ public class GameManager : MonoBehaviour
         }
 
         plantSelected = plant;
-        Texture2D cursorTexture = plantSelected.transform.GetChild(1).GetComponent<Image>().sprite.texture;
+        plantSprite = plantSelected.transform.GetChild(1).GetComponent<Image>().sprite;
+        Texture2D cursorTexture = plantSprite.texture;
         Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
     }
 
     public void ResetPlantSelected()
     {
         plantSelected = null;
+        plantSprite = null;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 }
