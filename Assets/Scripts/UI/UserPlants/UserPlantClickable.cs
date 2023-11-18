@@ -26,6 +26,7 @@ public class UserPlantClickable : MonoBehaviour, IPointerEnterHandler, IPointerE
     private TextMeshProUGUI textPlantQuantity;
 
     private bool isSelected = false;
+    private Plant plantSelected = null;
 
     private void Awake()
     {
@@ -45,6 +46,10 @@ public class UserPlantClickable : MonoBehaviour, IPointerEnterHandler, IPointerE
             ResetPlant();
         }
     }
+
+    public Plant GetPlantSelected() => plantSelected;
+
+    public void SetPlantSelected(Plant newPlant) => plantSelected = newPlant; 
 
     public void OnPointerEnter(PointerEventData eventData)
     {

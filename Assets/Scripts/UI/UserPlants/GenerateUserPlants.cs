@@ -32,6 +32,9 @@ public class GenerateUserPlants : MonoBehaviour
 
             temp.transform.name = "Plant_" + userPlants[i].GetPlantID().ToString("0000");
             temp.name = "Plant_" + userPlants[i].GetPlantID().ToString("0000");
+
+            UserPlantClickable userPlantClickableScript = temp.GetComponent<UserPlantClickable>();
+            userPlantClickableScript.SetPlantSelected(new Plant(userPlants[i].GetPlantID(), userPlants[i].GetPlantName(), userPlants[i].GetGrowTime(), userPlants[i].GetStackQuantity(), userPlants[i].GetSellPrice(), userPlants[i].GetBuyPrice()));
         }
     }
 }

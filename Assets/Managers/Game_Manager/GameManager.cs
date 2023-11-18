@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject plantSelected;
     private Sprite plantSprite;
+    private float plantGrowTime;
 
     private UserPlantClickable plantClickableScript;
 
@@ -23,11 +23,13 @@ public class GameManager : MonoBehaviour
 
             plantSelected = null;
             plantSprite = null;
+            plantGrowTime = -1f;
             plantClickableScript = null;
         }
     }
 
     public Sprite GetPlantSprite() => plantSprite;
+    public float GetPlantGrowTime() => plantGrowTime;
 
     public void SelectPlant(GameObject plant)
     {
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
         }
 
         plantSelected = plant;
+        plantGrowTime = plant.GetComponent<UserPlantClickable>().GetPlantSelected().GetGrowTime();
         plantSprite = plantSelected.transform.GetChild(1).GetComponent<Image>().sprite;
         Texture2D cursorTexture = plantSprite.texture;
         Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
@@ -48,6 +51,7 @@ public class GameManager : MonoBehaviour
     {
         plantSelected = null;
         plantSprite = null;
+        plantGrowTime = -1;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 }
