@@ -96,8 +96,9 @@ public class CropGrow : MonoBehaviour
         crop_controller.SetCropState(currentState);
         crop_controller.SetHasPlant(false);
         crop_controller.SetIsPlantGrown(false);
-        crop_controller.SetOutlineColor(new Color(0, 0, 0));
+        crop_controller.SetOutlineColor(new Color(0, 0, 0));        
 
         GameManager._GAMEMANAGER.AddPlantQuantity(currenPlantObject);
+        GameManager._GAMEMANAGER.AddCurrency(currentPlant.GetSellPrice());
     }
 }

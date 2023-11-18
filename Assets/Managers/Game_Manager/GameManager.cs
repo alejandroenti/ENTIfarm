@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private GameObject plant;
 
     private UserPlantClickable plantClickableScript;
+    private UpdateCurrency updateCurrencyScript;
 
     private void Awake()
     {
@@ -34,13 +35,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        updateCurrencyScript = GameObject.Find("CurrencyText").GetComponent<UpdateCurrency>();
+        updateCurrencyScript.UpdateCurrencyText(currency);
+    }
+
     public GameObject GetPlantSelected() => plantSelected;
     public Sprite GetPlantSprite() => plantSprite;
     public float GetPlantGrowTime() => plantGrowTime;
 
     public float GetCurrency() => currency;
-    public void AddCurrency(float amount) => currency += amount;
-    public void SubstractCurrency(float amount) => currency -= amount;
+    public void AddCurrency(float amount)
+    {
+        currency += amount;
+        updateCurrencyScript.UpdateCurrencyText(currency);
+    }
+    public void SubstractCurrency(float amount)
+    {
+        currency -= amount;
+        updateCurrencyScript.UpdateCurrencyText(currency);
+    }
 
     public void SubstractPlantQuantity(GameObject plant)
     {
