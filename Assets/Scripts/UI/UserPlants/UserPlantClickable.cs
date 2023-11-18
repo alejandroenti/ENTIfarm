@@ -40,7 +40,7 @@ public class UserPlantClickable : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1)) 
+        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) 
         {
             ResetPlant();
         }

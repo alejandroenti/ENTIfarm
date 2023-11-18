@@ -7,21 +7,23 @@ public class CropClickable : MonoBehaviour, IPointerDownHandler
     private const int START_NUMBERS_NAME = 6;
 
     private GenerateCrops generateCropsScript;
+    private CropGrow cropGrowScript;
 
     private void Awake()
     {
         generateCropsScript = GetComponentInParent<GenerateCrops>();
+        cropGrowScript = this.transform.GetChild(0).GetComponent<CropGrow>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) return;
+
         if (GameManager._GAMEMANAGER.GetPlantSprite() != null)
         {
             if (!this.gameObject.transform.GetChild(0).GetComponentInChildren<Image>().IsActive())
             {
-                Image plantImage = this.gameObject.transform.GetChild(0).GetComponentInChildren<Image>();
-                plantImage.enabled = true;
-                plantImage.sprite = GameManager._GAMEMANAGER.GetPlantSprite();
+                cropGrowScript.Plant();
             }
         }
 
