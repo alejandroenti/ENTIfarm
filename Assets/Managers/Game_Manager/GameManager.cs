@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         plantSelected = null;
         plantSprite = null;
-        plantGrowTime = -1;
+        plantGrowTime = -1f;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 }

@@ -43,13 +43,10 @@ public class UserPlantClickable : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) 
         {
+            ResetPlantSelected();
             ResetPlant();
         }
     }
-
-    public Plant GetPlantSelected() => plantSelected;
-
-    public void SetPlantSelected(Plant newPlant) => plantSelected = newPlant; 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -79,15 +76,22 @@ public class UserPlantClickable : MonoBehaviour, IPointerEnterHandler, IPointerE
         isSelected = true;
     }
 
-    public void ResetPlant()
-    {
-        GameManager._GAMEMANAGER.ResetPlantSelected();
+    public Plant GetPlantSelected() => plantSelected;
 
+    public void SetPlantSelected(Plant newPlant) => plantSelected = newPlant; 
+
+    public void ResetPlant()
+    {        
         imageBackground.color = baseColorBackground;
         imagePlant.transform.localScale = baseScale;
         textPlantName.color = baseColorText;
         textPlantQuantity.color = baseColorText;
 
         isSelected = false;
+    }
+
+    private void ResetPlantSelected()
+    {
+        GameManager._GAMEMANAGER.ResetPlantSelected();
     }
 }

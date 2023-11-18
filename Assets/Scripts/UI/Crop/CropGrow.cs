@@ -3,28 +3,68 @@ using UnityEngine.UI;
 
 public class CropGrow : MonoBehaviour
 {
-    private enum GrowStates { SEED, GROW, PLANT }
+    public enum GrowStates { SEED, GROW, PLANT, READY }
 
-    private bool hasPlant = false;
+    private bool hasPlantGrowing = false;
 
     private float cropGrowTime;
     private float cropGrowTimeState;
+    private float cropGrowTimer;
 
     private GrowStates currentState;
 
     private Image plantImage;
+    private Crop_Controller crop_controller;
 
     private void Awake()
     {
         plantImage = GetComponent<Image>();
-        
+        crop_controller = GetComponentInParent<Crop_Controller>();
+
         currentState = GrowStates.SEED;
+        cropGrowTimer = 0f;
     }
 
+    private void Update()
+    {
+        if (hasPlantGrowing)
+        {
+            cropGrowTimer += Time.deltaTime;
+        }
+
+        if (cropGrowTimer >= cropGrowTimeState)
+        {
+            switch (currentState)
+            {
+                case GrowStates.SEED:
+                    currentState = GrowStates.GROW;
+                    cropGrowTimeState = cropGrowTimeState * 2;
+
+                    crop_controller.SetCropState(currentState);
+                    crop_controller.SetOutlineColor(new Color(0, 0, 1));
+                    break;
+                case GrowStates.GROW:
+                    currentState = GrowStates.PLANT;
+                    cropGrowTimeState = cropGrowTime;
+
+                    crop_controller.SetCropState(currentState);
+                    crop_controller.SetOutlineColor(new Color(0, 1, 0));
+                    break;
+                case GrowStates.PLANT:
+                    currentState = GrowStates.READY;
+                    hasPlantGrowing = false;
+
+                    crop_controller.SetCropState(currentState);
+                    crop_controller.SetIsPlantGrown(true);
+                    crop_controller.SetOutlineColor(new Color(1, 1, 0));
+                    break;
+            }
+        }
+    }
 
     public void Plant()
     {
-        hasPlant = true;
+        hasPlantGrowing = true;
 
         plantImage.enabled = true;
         plantImage.sprite = GameManager._GAMEMANAGER.GetPlantSprite();
@@ -32,6 +72,9 @@ public class CropGrow : MonoBehaviour
         cropGrowTime = GameManager._GAMEMANAGER.GetPlantGrowTime();
         cropGrowTimeState = cropGrowTime / 3f;
 
-        Debug.Log(cropGrowTime + " - " + cropGrowTimeState + ": " + currentState);
+        currentState = GrowStates.SEED;
+        crop_controller.SetHasPlant(hasPlantGrowing);
+        crop_controller.SetCropState(currentState);
+        crop_controller.SetOutlineColor(new Color(1, 0, 0));
     }
 }

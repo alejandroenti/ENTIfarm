@@ -4,18 +4,34 @@ using UnityEngine.UI;
 
 public class CropClickable : MonoBehaviour, IPointerDownHandler
 {
-    private const int START_NUMBERS_NAME = 6;
+    //private const int START_NUMBERS_NAME = 6;
+
+    [Header("Outline Color transition")]
+    [SerializeField, Range(0, 0.75f)] private float trasitionColorSpeed;
 
     private Outline outlineComponent;
+    private Color currentOutlineColor;
+    private Color targetOutlineColor;
 
-    private GenerateCrops generateCropsScript;
-    private CropGrow cropGrowScript;
+    private float timeToTranisition;
+    private float timeToTranisitionTimer;
+
+    //private GenerateCrops generateCropsScript;
+    private Crop_Controller crop_controller;
 
     private void Awake()
     {
         outlineComponent = GetComponent<Outline>();
-        generateCropsScript = GetComponentInParent<GenerateCrops>();
-        cropGrowScript = this.transform.GetChild(0).GetComponent<CropGrow>();
+        //generateCropsScript = GetComponentInParent<GenerateCrops>();
+        crop_controller = GetComponent<Crop_Controller>();
+
+        currentOutlineColor = outlineComponent.effectColor;
+        targetOutlineColor = currentOutlineColor;
+    }
+
+    private void Update()
+    {
+        ChangeColorOutline();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -24,10 +40,10 @@ public class CropClickable : MonoBehaviour, IPointerDownHandler
 
         if (GameManager._GAMEMANAGER.GetPlantSprite() != null)
         {
-            if (!this.gameObject.transform.GetChild(0).GetComponentInChildren<Image>().IsActive())
+            if (crop_controller.GetHasPlant())
             {
                 outlineComponent.enabled = true;
-                cropGrowScript.Plant();
+                crop_controller.Plant();
             }
         }
 
@@ -42,5 +58,13 @@ public class CropClickable : MonoBehaviour, IPointerDownHandler
     public void RemoveCropOutline()
     {
         outlineComponent.enabled = false;
+    }
+
+    public void SetColorTargetOutline(Color newColor) => targetOutlineColor = newColor;
+
+    private void ChangeColorOutline()
+    {
+        outlineComponent.effectColor = Color.Lerp(currentOutlineColor, targetOutlineColor, trasitionColorSpeed * Time.deltaTime);
+        currentOutlineColor = outlineComponent.effectColor;
     }
 }
