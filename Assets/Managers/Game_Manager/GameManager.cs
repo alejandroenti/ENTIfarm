@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     private Sprite plantSprite;
     private float plantGrowTime;
 
+    private float currency;
+
+    private GameObject plant;
+
     private UserPlantClickable plantClickableScript;
 
     private void Awake()
@@ -25,11 +29,29 @@ public class GameManager : MonoBehaviour
             plantSprite = null;
             plantGrowTime = -1f;
             plantClickableScript = null;
+
+            currency = 0f;
         }
     }
 
+    public GameObject GetPlantSelected() => plantSelected;
     public Sprite GetPlantSprite() => plantSprite;
     public float GetPlantGrowTime() => plantGrowTime;
+
+    public float GetCurrency() => currency;
+    public void AddCurrency(float amount) => currency += amount;
+    public void SubstractCurrency(float amount) => currency -= amount;
+
+    public void SubstractPlantQuantity(GameObject plant)
+    {
+        UpdateQuantity updateQuantityScript = plant.transform.GetChild(3).GetComponent<UpdateQuantity>();
+        updateQuantityScript.SubstractQuantity();
+    }
+    public void AddPlantQuantity(GameObject plant) 
+    {
+        UpdateQuantity updateQuantityScript = plant.transform.GetChild(3).GetComponent<UpdateQuantity>();
+        updateQuantityScript.AddQuantity();
+    }
 
     public void SelectPlant(GameObject plant)
     {

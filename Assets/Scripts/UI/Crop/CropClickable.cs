@@ -13,9 +13,6 @@ public class CropClickable : MonoBehaviour, IPointerDownHandler
     private Color currentOutlineColor;
     private Color targetOutlineColor;
 
-    private float timeToTranisition;
-    private float timeToTranisitionTimer;
-
     //private GenerateCrops generateCropsScript;
     private Crop_Controller crop_controller;
 
@@ -40,10 +37,18 @@ public class CropClickable : MonoBehaviour, IPointerDownHandler
 
         if (GameManager._GAMEMANAGER.GetPlantSprite() != null)
         {
-            if (crop_controller.GetHasPlant())
+            if (!crop_controller.GetHasPlant())
             {
                 outlineComponent.enabled = true;
                 crop_controller.Plant();
+            }
+        }
+        else
+        {
+            if (crop_controller.GetIsPlantGrown())
+            {
+                outlineComponent.enabled = false;
+                crop_controller.Collect();
             }
         }
 

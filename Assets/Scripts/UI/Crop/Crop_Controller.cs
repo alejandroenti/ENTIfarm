@@ -21,7 +21,7 @@ public class Crop_Controller : MonoBehaviour
     public bool GetHasPlant() => hasPlant;
     public void SetHasPlant(bool planted) => hasPlant = planted;
     public bool GetIsPlantGrown() => isPlantGrown;
-    public void SetIsPlantGrown(bool grown) => hasPlant = grown;
+    public void SetIsPlantGrown(bool grown) => isPlantGrown = grown;
     public Color GetOutlineColor() => outlineColor;
     public void SetOutlineColor(Color newColor)
     {
@@ -31,6 +31,12 @@ public class Crop_Controller : MonoBehaviour
 
     public void Plant()
     {
+        transform.GetChild(0).gameObject.SetActive(true);
         cropGrowScript.Plant();
+    }
+
+    public void Collect()
+    {
+        cropGrowScript.Collect();
     }
 }
