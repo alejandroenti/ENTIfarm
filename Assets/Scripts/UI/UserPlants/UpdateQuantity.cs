@@ -17,6 +17,8 @@ public class UpdateQuantity : MonoBehaviour
         actualQuantity = this.GetComponentInParent<UserPlantClickable>().GetPlantSelected().GetStackQuantity();
     }
 
+    public int GetActualQuantity() => actualQuantity;
+
     public void SubstractQuantity()
     {
         actualQuantity--;

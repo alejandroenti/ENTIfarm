@@ -37,7 +37,9 @@ public class CropClickable : MonoBehaviour, IPointerDownHandler
 
         if (GameManager._GAMEMANAGER.GetPlantSprite() != null)
         {
-            if (!crop_controller.GetHasPlant())
+            bool canPlant = GameManager._GAMEMANAGER.GetPlantSelected().GetComponent<UserPlantClickable>().transform.GetChild(3).GetComponent<UpdateQuantity>().GetActualQuantity() > 0;
+
+            if (!crop_controller.GetHasPlant() && canPlant)
             {
                 outlineComponent.enabled = true;
                 crop_controller.Plant();
