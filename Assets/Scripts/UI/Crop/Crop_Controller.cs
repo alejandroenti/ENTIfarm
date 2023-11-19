@@ -9,11 +9,13 @@ public class Crop_Controller : MonoBehaviour
 
     private CropClickable cropClickableScript;
     private CropGrow cropGrowScript;
+    private PlantImageGrown plantImageGrownScript;
 
     private void Awake()
     {
         cropClickableScript = GetComponent<CropClickable>();
         cropGrowScript = GetComponentInChildren<CropGrow>();
+        plantImageGrownScript = GetComponentInChildren<PlantImageGrown>();
     }
 
     public CropGrow.GrowStates GetCropState() => cropState;
@@ -21,7 +23,11 @@ public class Crop_Controller : MonoBehaviour
     public bool GetHasPlant() => hasPlant;
     public void SetHasPlant(bool planted) => hasPlant = planted;
     public bool GetIsPlantGrown() => isPlantGrown;
-    public void SetIsPlantGrown(bool grown) => isPlantGrown = grown;
+    public void SetIsPlantGrown(bool grown)
+    {
+        isPlantGrown = grown;
+        plantImageGrownScript.SetIsAnimated(isPlantGrown);
+    }
     public Color GetOutlineColor() => outlineColor;
     public void SetOutlineColor(Color newColor)
     {

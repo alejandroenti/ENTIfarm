@@ -24,7 +24,9 @@ public class CropGrow : MonoBehaviour
         plantImage = GetComponent<Image>();
         crop_controller = GetComponentInParent<Crop_Controller>();
 
-        currentState = GrowStates.SEED;
+        currentState = GrowStates.NULL;
+
+        cropGrowTimeState = 1f;
         cropGrowTimer = 0f;
     }
 
@@ -81,7 +83,7 @@ public class CropGrow : MonoBehaviour
         cropGrowTimeState = cropGrowTime / 3f;
 
         currentState = GrowStates.SEED;
-        crop_controller.SetHasPlant(hasPlantGrowing);
+        crop_controller.SetIsPlantGrown(false);
         crop_controller.SetCropState(currentState);
         crop_controller.SetOutlineColor(new Color(1, 0, 0));
 
@@ -90,6 +92,7 @@ public class CropGrow : MonoBehaviour
 
     public void Collect()
     {
+        cropGrowTimer = 0f;
         currentState = GrowStates.NULL;
         plantImage.enabled = false;
 
