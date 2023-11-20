@@ -83,6 +83,7 @@ public class CropGrow : MonoBehaviour
         cropGrowTimeState = cropGrowTime / 3f;
 
         currentState = GrowStates.SEED;
+        crop_controller.SetHasPlant(hasPlantGrowing);
         crop_controller.SetIsPlantGrown(false);
         crop_controller.SetCropState(currentState);
         crop_controller.SetOutlineColor(new Color(1, 0, 0));
