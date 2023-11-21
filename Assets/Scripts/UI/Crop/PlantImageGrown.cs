@@ -2,25 +2,10 @@ using UnityEngine;
 
 public class PlantImageGrown : MonoBehaviour
 {
-    [SerializeField, Range(10f, 50f)] private float yOffset;
-    [SerializeField, Range(0.5f, 3f)] private float animationSpeed;
-
-    private Vector3 yUpOffset;
-    private Vector3 yDownOffset;
-    private Vector3 yTargetOffset;
+    [SerializeField, Range(0f, 1f)] private float amplitude;
+    [SerializeField, Range(2f, 10f)] private float frequency;
 
     private bool isAnimated = false;
-
-    private void Start()
-    {
-        yUpOffset = this.transform.position;
-        yUpOffset.y = this.transform.position.y - yOffset;
-       
-        yDownOffset = this.transform.position;
-        yDownOffset.y = this.transform.position.y + yOffset;
-        
-        yTargetOffset = yUpOffset;
-    }
 
     private void Update()
     {
@@ -32,15 +17,6 @@ public class PlantImageGrown : MonoBehaviour
 
     private void PlayIdleAnimation()
     {
-        this.transform.position = Vector3.Lerp(this.transform.parent.position, yTargetOffset, animationSpeed * Time.deltaTime);
-
-        if (this.transform.position.y <= yTargetOffset.y && yTargetOffset == yUpOffset)
-        {
-            yTargetOffset = yDownOffset;
-        }
-        else if (this.transform.position.y >= yTargetOffset.y && yTargetOffset == yDownOffset)
-        {
-            yTargetOffset = yUpOffset;
-        }
+        this.transform.position = new Vector3(this.transform.parent.position.x, Mathf.Sin(Time.realtimeSinceStartup * frequency) * amplitude + this.transform.position.y, this.transform.parent.position.z);
     }
 }
