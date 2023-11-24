@@ -19,6 +19,8 @@ public class CropGrow : MonoBehaviour
     private Image plantImage;
     private Crop_Controller crop_controller;
 
+    private Vector3 initialPosition;
+
     private void Awake()
     {
         plantImage = GetComponent<Image>();
@@ -28,10 +30,14 @@ public class CropGrow : MonoBehaviour
 
         cropGrowTimeState = 1f;
         cropGrowTimer = 0f;
+
+        initialPosition = transform.parent.position;
     }
 
     private void Update()
     {
+        Debug.Log(initialPosition);
+
         if (hasPlantGrowing)
         {
             cropGrowTimer += Time.deltaTime;

@@ -19,6 +19,7 @@ public class PlantImageGrown : MonoBehaviour
         }
         else
         {
+            this.transform.position = new Vector3(this.transform.parent.position.x, this.transform.parent.position.y, this.transform.parent.position.z);
             animationTimer = 0f;
         }
     }
