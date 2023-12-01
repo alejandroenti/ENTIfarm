@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class OpenShop : MonoBehaviour
 {
+    [Header("Shop Menu")]
+    [SerializeField] private GameObject shopMenuObject;
+
     private Button shopButton;
 
     private void Awake()
@@ -14,6 +17,6 @@ public class OpenShop : MonoBehaviour
 
     private void SpawnShopMenu()
     {
-        Debug.Log("Button pressed!");
+        shopMenuObject.SetActive(true);
     }
 }

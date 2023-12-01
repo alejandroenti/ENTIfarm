@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class GenerateUserPlants : MonoBehaviour
 {
     [SerializeField] private GameObject userPlantPrefab;
-    [SerializeField] private Sprite sprite;
-
+    
     private List<Plant> userPlants = new List<Plant>();
+    private Sprite sprite;
 
     private void Start()
     {

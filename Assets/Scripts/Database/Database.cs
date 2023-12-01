@@ -35,10 +35,12 @@ public class Database : MonoBehaviour
         GetAllPlants();
     }
 
+    public List<Plant> GetPlants() => plants;
+
     private List<Plant> GetAllPlants()
     {
         // Miramos si el array está vacío. En caso que no esté, retornamos el array
-        if (plants.Count == 0)
+        if (plants.Count != 0)
         {
             return plants;
         }
