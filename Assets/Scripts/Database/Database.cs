@@ -77,4 +77,12 @@ public class Database : MonoBehaviour
 
         return userPlants;
     }
+
+    // EN EL FUTURO DEBEREMOS GESTIONAR QUE USUARIO NOS HACE LA PETICIÓN
+    public void BuyPlant(int idPlant)
+    {
+        IDbCommand cmd = conn.CreateCommand();
+        string a = "INSERT INTO plants_users (id_plant, id_user) VALUES (" + idPlant + ", 1);";
+        Debug.Log(a);
+    }
 }

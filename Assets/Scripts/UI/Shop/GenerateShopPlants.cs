@@ -11,7 +11,7 @@ public class GenerateShopPlants : MonoBehaviour
     private List<Plant> allPlants = new List<Plant>();
     private Sprite sprite;
 
-    private void Start()
+    private void OnEnable()
     {
         GetAllGamePlants();
     }
@@ -26,6 +26,9 @@ public class GenerateShopPlants : MonoBehaviour
             temp.transform.SetParent(transform, false);
 
             sprite = Resources.Load<Sprite>("Fruits/icons/32x32/" + allPlants[i].GetPlantID().ToString());
+
+            temp.transform.GetComponent<Plant_Controller>().SetPlant(allPlants[i]);
+  
 
             temp.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
             temp.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allPlants[i].GetPlantName();

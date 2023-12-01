@@ -85,6 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4127753796063196328}
+  - component: {fileID: 5487424073462622326}
   m_Layer: 5
   m_Name: PlantShop
   m_TagString: Untagged
@@ -118,6 +119,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5487424073462622326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3322178408631230633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679f520c81c512e46871e0f993b54b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3582160728529747512
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +548,7 @@ GameObject:
   - component: {fileID: 3600984992063126551}
   - component: {fileID: 5504563005487783961}
   - component: {fileID: 2030342867558357586}
+  - component: {fileID: 703946572105532668}
   m_Layer: 5
   m_Name: PlantBuyButton
   m_TagString: Untagged
@@ -644,7 +658,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5504563005487783961}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 703946572105532668}
+        m_TargetAssemblyTypeName: BuyPlant, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &703946572105532668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5437334334653166384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f02a88c31b17b74d931280e5066ccc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6412867021592895274
 GameObject:
   m_ObjectHideFlags: 0
