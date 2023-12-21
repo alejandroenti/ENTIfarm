@@ -51,6 +51,28 @@ CREATE TABLE savedgames_cells (
 
 INSERT INTO plants (plant, time, quantity, sell, buy)
 	VALUES ("Nabo", 60, 8, 10, 56);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Cebolla", 75, 7, 30, 85);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Apio", 20, 4, 20, 25);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Avocado", 60, 2, 40, 100);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Blueberry", 25, 8, 5, 52);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Coconut", 60, 3, 22, 85);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Grapes", 45, 10, 3, 33);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Dragonfruit", 120, 2, 50, 95);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Mango", 80, 4, 16, 52);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Mushroom", 100, 6, 8, 60);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Eggs", 35, 8, 10, 70);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Peanuts", 50, 9, 7, 50);
 	
 INSERT INTO users (user, password)
 	VALUES ("enti", "enti");
