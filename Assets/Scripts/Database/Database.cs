@@ -15,6 +15,7 @@ public class Database : MonoBehaviour
 
     // Objects variables
     private List<Plant> plants;
+    private List<Save> saves;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class Database : MonoBehaviour
             conn.Open();
 
             plants = new List<Plant>();
+            saves = new List<Save>();
         }
 
         GetAllPlants();
@@ -59,6 +61,25 @@ public class Database : MonoBehaviour
         }
 
         return plants;
+    }
+
+    public List<Save> GetAllSaves()
+    {
+        saves.Clear();
+
+        // Nos conectamos a la base de datos y ejecutamos el comando de recibir todas las plantas
+        IDbCommand cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT savedgames.id_savedgame, savedgames.time, savedgames.money, savedgames.id_user, users.user FROM savedgames LEFT JOIN users ON users.id_user = savedgames.id_user;";
+        IDataReader reader = cmd.ExecuteReader();
+
+
+        // Mientras tengamos ROWS que leer, almacenamos los datos en un array, encapsulado en el objecto Plant
+        while (reader.Read())
+        {
+            saves.Add(new Save(reader.GetInt32(0), reader.GetFloat(1), reader.GetFloat(2), reader.GetInt32(3), reader.GetString(4)));
+        }
+
+        return saves;
     }
 
     public List<Plant> GetUserPlants()

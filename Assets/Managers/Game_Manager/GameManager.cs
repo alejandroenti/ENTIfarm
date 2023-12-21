@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
             plantsDictionary = new Dictionary<int, int>();
             FillToNullPlantDictionary();
 
-            currency = 60f;
+            currency = 0f;
         }
     }
 
@@ -144,5 +144,10 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         Database._DATABASE.SaveGame(gameTime, currency, cropsObject);
+    }
+
+    public void LoadSave()
+    {
+
     }
 }
