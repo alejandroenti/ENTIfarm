@@ -121,4 +121,9 @@ public class GameManager : MonoBehaviour
             plantsDictionary[plants[i].GetPlantID()] = 0;
         }
     }
+
+    public void SaveGame()
+    {
+
+    }
 }
