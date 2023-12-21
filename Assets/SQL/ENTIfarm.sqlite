@@ -69,10 +69,6 @@ INSERT INTO plants (plant, time, quantity, sell, buy)
 	VALUES ("Mango", 80, 4, 16, 52);
 INSERT INTO plants (plant, time, quantity, sell, buy)
 	VALUES ("Mushroom", 100, 6, 8, 60);
-INSERT INTO plants (plant, time, quantity, sell, buy)
-	VALUES ("Eggs", 35, 8, 10, 70);
-INSERT INTO plants (plant, time, quantity, sell, buy)
-	VALUES ("Peanuts", 50, 9, 7, 50);
 	
 INSERT INTO users (user, password)
 	VALUES ("enti", "enti");
