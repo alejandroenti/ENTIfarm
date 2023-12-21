@@ -12,10 +12,14 @@ public class GameManager : MonoBehaviour
     [Header("Crops Object")]
     [SerializeField] private GameObject cropsObject;
 
+    [Header("Save Selector Menu Object")]
+    [SerializeField] private GameObject saveMenuObject;
+
     private GameObject plantSelected;
     private Sprite plantSprite;
     private float plantGrowTime;
 
+    private float gameTime = 0f;
     private float currency;
     private Dictionary<int, int> plantsDictionary;
 
@@ -52,6 +56,12 @@ public class GameManager : MonoBehaviour
         updateCurrencyScript.UpdateCurrencyText(currency);
     }
 
+    private void Update()
+    {
+        gameTime += Time.deltaTime;
+    }
+
+    public void SetGameTime(float time) => gameTime = time;
     public GameObject GetPlantSelected() => plantSelected;
     public Sprite GetPlantSprite() => plantSprite;
     public float GetPlantGrowTime() => plantGrowTime;
@@ -122,8 +132,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OpenSaveSelector() => saveMenuObject.SetActive(true);
+    public void CloseSaveSelector() => saveMenuObject.SetActive(false);
+
     public void SaveGame()
     {
-
+        Database._DATABASE.SaveGame(gameTime, currency, cropsObject);
     }
 }

@@ -2,6 +2,8 @@ using System.Data;
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine.PlayerLoop;
 
 public class Database : MonoBehaviour
 {
@@ -84,5 +86,22 @@ public class Database : MonoBehaviour
         IDbCommand cmd = conn.CreateCommand();
         cmd.CommandText = "INSERT INTO plants_users (id_plant, id_user) VALUES (" + idPlant + ", 1);";
         IDataReader reader = cmd.ExecuteReader();
+    }
+
+    public void SaveGame(float gameTime, float currency, GameObject crops)
+    {
+        IDbCommand cmd = conn.CreateCommand();
+        //UPDATE savedgames SET time = 7.30, money = 60, saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;
+        Debug.Log("UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;");
+        cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;";
+        IDataReader reader = cmd.ExecuteReader();
+
+        //cmd.CommandText = "UPDATE savedgames_cells SET time = " + gameTime + ", id_plant = " + currency + " WHERE savedgames.id_user = 1;";
+        //reader = cmd.ExecuteReader();
+
+        //while (reader.Read())
+        //{
+        //    Debug.Log(reader.GetInt32(0));
+        //}
     }
 }
