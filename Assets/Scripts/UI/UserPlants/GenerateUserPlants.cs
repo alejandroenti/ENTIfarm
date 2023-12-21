@@ -30,6 +30,9 @@ public class GenerateUserPlants : MonoBehaviour
 
             temp.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
             temp.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = userPlants[i].GetPlantName();
+
+            //int plantQuantity = userPlants[i].GetStackQuantity() - GameManager._GAMEMANAGER.GetPlantInDictionary(userPlants[i]);
+            //temp.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = plantQuantity.ToString();
             temp.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = userPlants[i].GetStackQuantity().ToString();
 
             temp.transform.name = "Plant_" + userPlants[i].GetPlantID().ToString("0000");

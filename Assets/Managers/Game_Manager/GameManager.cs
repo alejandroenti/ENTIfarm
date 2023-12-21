@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,15 @@ public class GameManager : MonoBehaviour
     [Header("Generate User Plants Reference")]
     [SerializeField] private GenerateUserPlants generateUserPlantsScript;
 
+    [Header("Crops Object")]
+    [SerializeField] private GameObject cropsObject;
+
     private GameObject plantSelected;
     private Sprite plantSprite;
     private float plantGrowTime;
 
     private float currency;
+    //private Dictionary<Plant, int> plantsDictionary;
 
     private GameObject plant;
 
@@ -34,7 +39,10 @@ public class GameManager : MonoBehaviour
             plantGrowTime = -1f;
             plantClickableScript = null;
 
-            currency = 30f;
+            //plantsDictionary = new Dictionary<Plant, int>();
+            //FillToNullPlantDictionary();
+
+            currency = 60f;
         }
     }
 
@@ -59,6 +67,9 @@ public class GameManager : MonoBehaviour
         currency -= amount;
         updateCurrencyScript.UpdateCurrencyText(currency);
     }
+
+    //public void SetPlantInDictionary(Plant currentPlant, int amount) => plantsDictionary[currentPlant] = amount;
+    //public int GetPlantInDictionary(Plant currentPlant) => plantsDictionary[currentPlant];
 
     public void SubstractPlantQuantity(GameObject plant)
     {
@@ -98,5 +109,15 @@ public class GameManager : MonoBehaviour
     public void UpdateUserPlantsList()
     {
         generateUserPlantsScript.UpdateList();
+    }
+
+    private void FillToNullPlantDictionary()
+    {
+        List<Plant> plants = Database._DATABASE.GetPlants();
+
+        for (int i = 0; i < plants.Count; i++)
+        {
+            //plantsDictionary[plants[i]] = 0;
+        }
     }
 }
