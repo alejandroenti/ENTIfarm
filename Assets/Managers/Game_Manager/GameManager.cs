@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
             plantGrowTime = -1f;
             plantClickableScript = null;
 
-            currency = 100f;
+            currency = 30f;
         }
     }
 

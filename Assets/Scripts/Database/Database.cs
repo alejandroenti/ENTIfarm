@@ -83,7 +83,6 @@ public class Database : MonoBehaviour
     {
         IDbCommand cmd = conn.CreateCommand();
         cmd.CommandText = "INSERT INTO plants_users (id_plant, id_user) VALUES (" + idPlant + ", 1);";
-        Debug.Log(cmd.CommandText);
         IDataReader reader = cmd.ExecuteReader();
     }
 }
