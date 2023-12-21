@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private float plantGrowTime;
 
     private float currency;
-    //private Dictionary<Plant, int> plantsDictionary;
+    private Dictionary<int, int> plantsDictionary;
 
     private GameObject plant;
 
@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
             plantGrowTime = -1f;
             plantClickableScript = null;
 
-            //plantsDictionary = new Dictionary<Plant, int>();
-            //FillToNullPlantDictionary();
+            plantsDictionary = new Dictionary<int, int>();
+            FillToNullPlantDictionary();
 
             currency = 60f;
         }
@@ -68,8 +68,9 @@ public class GameManager : MonoBehaviour
         updateCurrencyScript.UpdateCurrencyText(currency);
     }
 
-    //public void SetPlantInDictionary(Plant currentPlant, int amount) => plantsDictionary[currentPlant] = amount;
-    //public int GetPlantInDictionary(Plant currentPlant) => plantsDictionary[currentPlant];
+    public void AddPlantInDictionary(int currentPlant) => plantsDictionary[currentPlant]++;
+    public void SubstractPlantInDictionary(int currentPlant) => plantsDictionary[currentPlant]++;
+    public int GetPlantInDictionary(int currentPlant) => plantsDictionary[currentPlant];
 
     public void SubstractPlantQuantity(GameObject plant)
     {
@@ -117,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < plants.Count; i++)
         {
-            //plantsDictionary[plants[i]] = 0;
+            plantsDictionary[plants[i].GetPlantID()] = 0;
         }
     }
 }

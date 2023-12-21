@@ -671,6 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generateUserPlantsScript: {fileID: 1607003824}
+  cropsObject: {fileID: 1246546160}
 --- !u!1 &821533264
 GameObject:
   m_ObjectHideFlags: 0

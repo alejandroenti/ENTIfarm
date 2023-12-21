@@ -14,7 +14,8 @@ public class UpdateQuantity : MonoBehaviour
 
     private void Start()
     {
-        actualQuantity = this.GetComponentInParent<UserPlantClickable>().GetPlantSelected().GetStackQuantity();
+        actualQuantity = GetComponentInParent<UserPlantClickable>().GetPlantSelected().GetStackQuantity() - GameManager._GAMEMANAGER.GetPlantInDictionary(GetComponentInParent<UserPlantClickable>().GetPlantSelected().GetPlantID());
+        textQuantityComponent.text = actualQuantity.ToString();
     }
 
     public int GetActualQuantity() => actualQuantity;
