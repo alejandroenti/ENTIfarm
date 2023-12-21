@@ -43,7 +43,7 @@ CREATE TABLE savedgames_cells (
 	x INT NOT NULL,
 	y INT NOT NULL,
 	time FLOAT NOT NULL,
-	id_plant INT UNSIGNED NOT NULL,
+	id_plant INT UNSIGNED,
 	id_savedgame INT UNSIGNED NOT NULL,
 	FOREIGN KEY (id_plant) REFERENCES plants(id_plant),
 	FOREIGN KEY (id_savedgame) REFERENCES savedgames(id_savedgame)
@@ -75,3 +75,110 @@ INSERT INTO users (user, password)
 	
 INSERT INTO plants_users (id_plant, id_user)
 	VALUES (1, 1);
+
+
+DROP TABLE IF EXISTS savedgames_cells;
+DROP TABLE IF EXISTS savedgames;
+DROP TABLE IF EXISTS plants_users;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS plants;
+
+CREATE TABLE plants (
+	id_plant INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	plant VARCHAR(24) NOT NULL,
+	time FLOAT NOT NULL,
+	quantity INT NOT NULL,
+	sell DECIMAL(9,2) NOT NULL,
+	buy DECIMAL(9,2) NOT NULL,
+	season INT
+);
+
+CREATE TABLE users (
+	id_user INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	user VARCHAR(12) NOT NULL,
+	password CHAR(32) NOT NULL
+);
+
+CREATE TABLE plants_users (
+	id_plant_user INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	id_plant INT UNSIGNED NOT NULL,
+	id_user INT UNSIGNED NOT NULL,
+	FOREIGN KEY (id_plant) REFERENCES plants(id_plant),
+	FOREIGN KEY (id_user) REFERENCES users(id_user)
+);
+
+CREATE TABLE savedgames (
+	id_savedgame INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	time FLOAT NOT NULL,
+	size INT NOT NULL,
+	money DECIMAL(9,2) NOT NULL,
+	saved DATETIME DEFAULT CURRENT_TIMESTAMP,
+	id_user INT UNSIGNED NOT NULL,
+	FOREIGN KEY (id_user) REFERENCES users(id_user)
+);
+
+CREATE TABLE savedgames_cells (
+	id_savedgame_cell INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	x INT NOT NULL,
+	y INT NOT NULL,
+	time FLOAT NOT NULL,
+	id_plant INT UNSIGNED,
+	id_savedgame INT UNSIGNED NOT NULL,
+	FOREIGN KEY (id_plant) REFERENCES plants(id_plant),
+	FOREIGN KEY (id_savedgame) REFERENCES savedgames(id_savedgame)
+);
+
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Nabo", 60, 8, 10, 56);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Cebolla", 75, 7, 30, 85);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Apio", 20, 4, 20, 25);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Avocado", 60, 2, 40, 100);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Blueberry", 25, 8, 5, 52);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Coconut", 60, 3, 22, 85);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Grapes", 45, 10, 3, 33);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Dragonfruit", 120, 2, 50, 95);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Mango", 80, 4, 16, 52);
+INSERT INTO plants (plant, time, quantity, sell, buy)
+	VALUES ("Mushroom", 100, 6, 8, 60);
+	
+INSERT INTO users (user, password)
+	VALUES ("enti", "enti");
+	
+INSERT INTO plants_users (id_plant, id_user)
+	VALUES (1, 1);
+
+INSERT INTO savedgames (time, size, money, id_user) VALUES (0, 5, 0, 1);
+
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (0, 0, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (0, 1, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (0, 2, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (0, 3, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (0, 4, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (1, 0, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (1, 1, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (1, 2, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (1, 3, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (1, 4, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (2, 0, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (2, 1, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (2, 2, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (2, 3, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (2, 4, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (3, 0, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (3, 1, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (3, 2, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (3, 3, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (3, 4, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (4, 0, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (4, 1, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (4, 2, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (4, 3, 0, null, 1);
+INSERT INTO savedgames_cells (x, y, time, id_plant, id_savedgame) VALUES (4, 4, 0, null, 1);

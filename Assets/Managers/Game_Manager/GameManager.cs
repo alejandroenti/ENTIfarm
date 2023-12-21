@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     private float plantGrowTime;
 
     private float gameTime = 0f;
+    private int userID = 1;
+    private int saveID = 1;
     private float currency;
     private Dictionary<int, int> plantsDictionary;
 
@@ -62,6 +64,10 @@ public class GameManager : MonoBehaviour
     }
 
     public void SetGameTime(float time) => gameTime = time;
+    public int GetUsderID() => userID;
+    public void SetUserID(int newUserID) => userID = newUserID;
+    public int GetSaveID() => saveID;
+    public void SetSaveID(int newSaveID) => saveID = newSaveID;
     public GameObject GetPlantSelected() => plantSelected;
     public Sprite GetPlantSprite() => plantSprite;
     public float GetPlantGrowTime() => plantGrowTime;

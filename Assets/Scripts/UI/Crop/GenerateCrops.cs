@@ -19,8 +19,8 @@ public class GenerateCrops : MonoBehaviour
 
     private void Awake()
     {
-        // Pedir cropsRow a la base de datos, de momento incializamos en 4
-        cropsRows = 4;
+        // 5 FILAS
+        cropsRows = 5;
 
         // Indicamos el mayor tamaño que va a tener el parterre
         cropsMaxSize = CELL_IDEL_SIZE + CELL_IDEL_SPACING;

@@ -3,7 +3,6 @@ using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine.PlayerLoop;
 
 public class Database : MonoBehaviour
 {
@@ -80,28 +79,41 @@ public class Database : MonoBehaviour
         return userPlants;
     }
 
-    // EN EL FUTURO DEBEREMOS GESTIONAR QUE USUARIO NOS HACE LA PETICIÓN
     public void BuyPlant(int idPlant)
     {
         IDbCommand cmd = conn.CreateCommand();
-        cmd.CommandText = "INSERT INTO plants_users (id_plant, id_user) VALUES (" + idPlant + ", 1);";
-        IDataReader reader = cmd.ExecuteReader();
+        cmd.CommandText = "INSERT INTO plants_users (id_plant, id_user) VALUES (" + idPlant + ", " + GameManager._GAMEMANAGER.GetUsderID() + ");";
+        cmd.ExecuteReader();
     }
 
     public void SaveGame(float gameTime, float currency, GameObject crops)
     {
         IDbCommand cmd = conn.CreateCommand();
-        //UPDATE savedgames SET time = 7.30, money = 60, saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;
-        Debug.Log("UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;");
-        cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;";
-        IDataReader reader = cmd.ExecuteReader();
 
-        //cmd.CommandText = "UPDATE savedgames_cells SET time = " + gameTime + ", id_plant = " + currency + " WHERE savedgames.id_user = 1;";
-        //reader = cmd.ExecuteReader();
+  
+        
+            //UPDATE savedgames SET time = 7.30, money = 60, saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;
+            cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;";
+            cmd.ExecuteNonQuery();
+            Debug.Log("Game Settings Saved!");
+        
 
-        //while (reader.Read())
-        //{
-        //    Debug.Log(reader.GetInt32(0));
-        //}
+        for (int i = 0; i < crops.transform.childCount; i++)
+        {
+            string plantID = "NULL";
+
+            if (crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetPlant() != null) {
+                plantID = crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetPlant().GetPlantID().ToString();
+            }
+
+
+                // UPDATE savedgames_cells SET time = 23, id_plant = 1 WHERE savedgames_cells.id_savedgame = 1 AND savedgames_cells.x = 2 AND savedgames_cells.y = 3;
+                cmd.CommandText = "UPDATE savedgames_cells SET time = " + crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetCropGrowTimer().ToString().Replace(",", ".") + ", id_plant = " + plantID + " WHERE savedgames_cells.id_savedgame = " + GameManager._GAMEMANAGER.GetSaveID() + " AND savedgames_cells.x = " + (int)i / 5 + " AND savedgames_cells.y = " + i % 5 + ";";
+                cmd.ExecuteNonQuery();
+                Debug.Log("Cell " + (int)i / 5 + ", " + i % 5 + " Saved!");
+            
+        }
+
+        Debug.Log("Game Saved");
     }
 }
