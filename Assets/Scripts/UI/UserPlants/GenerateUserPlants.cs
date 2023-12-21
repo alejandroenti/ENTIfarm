@@ -17,6 +17,8 @@ public class GenerateUserPlants : MonoBehaviour
 
     public void UpdateList()
     {
+        CleanCurrentList();
+
         userPlants = Database._DATABASE.GetUserPlants();
 
         for (int i = 0; i < userPlants.Count; i++)
@@ -35,6 +37,19 @@ public class GenerateUserPlants : MonoBehaviour
 
             UserPlantClickable userPlantClickableScript = temp.GetComponent<UserPlantClickable>();
             userPlantClickableScript.SetPlantSelected(new Plant(userPlants[i].GetPlantID(), userPlants[i].GetPlantName(), userPlants[i].GetGrowTime(), userPlants[i].GetStackQuantity(), userPlants[i].GetSellPrice(), userPlants[i].GetBuyPrice()));
+        }
+    }
+
+    private void CleanCurrentList()
+    {
+        if (transform.childCount == 0)
+        {
+            return;
+        }
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
         }
     }
 }

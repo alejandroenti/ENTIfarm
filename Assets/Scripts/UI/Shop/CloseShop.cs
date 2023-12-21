@@ -17,6 +17,7 @@ public class CloseShop : MonoBehaviour
 
     private void HideShopMenu()
     {
+        GameManager._GAMEMANAGER.UpdateUserPlantsList();
         shopMenuObject.SetActive(false);
     }
 }

@@ -5,6 +5,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager _GAMEMANAGER;
 
+    [Header("Generate User Plants Reference")]
+    [SerializeField] private GenerateUserPlants generateUserPlantsScript;
+
     private GameObject plantSelected;
     private Sprite plantSprite;
     private float plantGrowTime;
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour
             plantGrowTime = -1f;
             plantClickableScript = null;
 
-            currency = 0f;
+            currency = 100f;
         }
     }
 
@@ -90,5 +93,10 @@ public class GameManager : MonoBehaviour
         plantSprite = null;
         plantGrowTime = -1f;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void UpdateUserPlantsList()
+    {
+        generateUserPlantsScript.UpdateList();
     }
 }
