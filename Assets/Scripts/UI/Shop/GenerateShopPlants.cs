@@ -39,4 +39,12 @@ public class GenerateShopPlants : MonoBehaviour
             temp.name = "ShopPlant_" + allPlants[i].GetPlantID().ToString("0000");
         }
     }
+
+    private void OnDisable()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+    }
 }
