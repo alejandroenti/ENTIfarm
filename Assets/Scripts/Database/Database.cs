@@ -81,14 +81,15 @@ public class Database : MonoBehaviour
         return saves;
     }
 
-    public List<Plant> GetUserPlants()
+    public List<Plant> GetUserPlants(int user_id)
     {
         // Generamos la variable de la lista a retornar
         List<Plant> userPlants = new List<Plant>();
 
         // Nos conectamos a la base de datos y ejecutamos el comando de recibir todas las plantas
         IDbCommand cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT plants.id_plant, plants.plant, plants.growtime, plants.quantity * COUNT(*) as total_quantity, plants.sell, plants.buy FROM plants_users LEFT JOIN plants ON plants.id_plant = plants_users.id_plant WHERE plants_users.id_user = 1 GROUP BY plants.id_plant;";
+        cmd.CommandText = "SELECT plants.id_plant, plants.plant, plants.growtime, plants.quantity * COUNT(*) as total_quantity, plants.sell, plants.buy FROM plants_users LEFT JOIN plants ON plants.id_plant = plants_users.id_plant WHERE plants_users.id_user = " + user_id + " GROUP BY plants.id_plant;";
+        Debug.Log(cmd.CommandText);
         IDataReader reader = cmd.ExecuteReader();
 
         while (reader.Read())
@@ -215,6 +216,5 @@ public class Database : MonoBehaviour
             Debug.Log(cmd.CommandText);
             cmd.ExecuteNonQuery();
         }
-        
     }
 }

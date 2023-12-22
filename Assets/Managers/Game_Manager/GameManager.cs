@@ -132,8 +132,15 @@ public class GameManager : MonoBehaviour
     {
         saveMenuObject.SetActive(true);
         SaveGame();
+        for (int i = 0; i < cropsObject.transform.childCount; i++)
+        {
+            cropsObject.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().CollectExit();
+        }
     }
-    public void CloseSaveSelector() => saveMenuObject.SetActive(false);
+    public void CloseSaveSelector()
+    {
+        saveMenuObject.SetActive(false);
+    }
 
     public void SaveGame()
     {
@@ -158,13 +165,21 @@ public class GameManager : MonoBehaviour
         SetCurrency(0);
         SetGameTime(0);
 
+        Database._DATABASE.BuyPlant(2);
+
+        LoadSave();
+
         // Cerrar Save Selector, lleva a cargar la partida indicada
         CloseSaveSelector();
     }
 
     public void LoadSave()
     {
+
         List<CellsSave> cells = Database._DATABASE.LoadGame(saveID);
+
+        UpdateUserPlantsList();
+
         for (int j = 0; j < userPlantsObject.transform.childCount; j++)
         {
             UpdateQuantity updateQuantityScript = userPlantsObject.transform.GetChild(j).GetChild(3).GetComponent<UpdateQuantity>();

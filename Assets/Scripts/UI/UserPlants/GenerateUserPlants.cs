@@ -10,16 +10,16 @@ public class GenerateUserPlants : MonoBehaviour
     private List<Plant> userPlants = new List<Plant>();
     private Sprite sprite;
 
-    private void Start()
-    {
-        UpdateList();
-    }
+    //private void Start()
+    //{
+    //    UpdateList();
+    //}
 
     public void UpdateList()
     {
         CleanCurrentList();
 
-        userPlants = Database._DATABASE.GetUserPlants();
+        userPlants = Database._DATABASE.GetUserPlants(GameManager._GAMEMANAGER.GetUsderID());
 
         for (int i = 0; i < userPlants.Count; i++)
         {
