@@ -140,12 +140,31 @@ public class GameManager : MonoBehaviour
         Database._DATABASE.SaveGame(gameTime, currency, cropsObject);
     }
 
+    public void CreateSave(string username)
+    {
+        // Crear un usuario
+        Database._DATABASE.CreateUser(username);
+
+        // Recoger el ID del usuario recién creado (PRIMERO DESCENDIENTE LIMIT 1)
+        SetUserID(Database._DATABASE.GetCreatedUser());
+
+        // Generar una Save con el ID del usuario y recoger el ID de la save
+        SetSaveID(Database._DATABASE.GenerateSave(GetUsderID()));
+
+        // Generar las celdas de la save (25, 5x5 siempre)
+        Database._DATABASE.GenerateCellsSave(GetSaveID());
+
+        // Seteamos el dinero y el tiempo a 0, eso lo hacemos manualmente al clicar en la Save
+        SetCurrency(0);
+        SetGameTime(0);
+
+        // Cerrar Save Selector, lleva a cargar la partida indicada
+        CloseSaveSelector();
+    }
+
     public void LoadSave()
     {
         List<CellsSave> cells = Database._DATABASE.LoadGame(saveID);
-
-        Debug.Log(cells.Count);
-
         for (int j = 0; j < userPlantsObject.transform.childCount; j++)
         {
             UpdateQuantity updateQuantityScript = userPlantsObject.transform.GetChild(j).GetChild(3).GetComponent<UpdateQuantity>();
@@ -154,7 +173,6 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < cells.Count; i++)
         {
-            Debug.Log("Loading " + (int)i / 5 + ", " + (int)i % 5 + " - Plant ID: " + cells[i].GetPlantID());
             if (cells[i].GetPlantID() != 1)
             {
                 for (int j = 0; j < userPlantsObject.transform.childCount; j++)

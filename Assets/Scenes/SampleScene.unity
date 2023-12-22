@@ -206,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 13342170}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1161803528}
+        m_TargetAssemblyTypeName: CreateSave, Assembly-CSharp
+        m_MethodName: CreateSaveButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &13342170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2778,6 +2790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1161803527}
+  - component: {fileID: 1161803528}
   m_Layer: 5
   m_Name: NewSave
   m_TagString: Untagged
@@ -2807,6 +2820,19 @@ RectTransform:
   m_AnchoredPosition: {x: -75.52661, y: -64.171585}
   m_SizeDelta: {x: 541.4734, y: 759.6531}
   m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &1161803528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161803526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8985fcd76f3c8743b469d6686a122da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 1959573329}
 --- !u!1 &1177527371
 GameObject:
   m_ObjectHideFlags: 0

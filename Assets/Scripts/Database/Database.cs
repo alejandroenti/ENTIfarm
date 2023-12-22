@@ -110,7 +110,7 @@ public class Database : MonoBehaviour
     {
         IDbCommand cmd = conn.CreateCommand();
         //UPDATE savedgames SET time = 7.30, money = 60, saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;
-        cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;";
+        cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = " + GameManager._GAMEMANAGER.GetUsderID() + ";";
         cmd.ExecuteNonQuery();
         Debug.Log("Game Settings Saved!");
         
@@ -151,5 +151,70 @@ public class Database : MonoBehaviour
         }
 
         return cells;
+    }
+
+    public void CreateUser(string username)
+    {
+        // AL NO HACER LOGIN, CONTRASEÑA SIEMPRE SERÁ enti YA QUE ES UN CAMPO OBLIGATORIO
+        IDbCommand cmd = conn.CreateCommand();
+        cmd.CommandText = "INSERT INTO users (user, password) VALUES ('" + username + "', 'enti');";
+        Debug.Log(cmd.CommandText);
+        cmd.ExecuteNonQuery();
+    }
+
+    public int GetCreatedUser()
+    {
+        IDbCommand cmd = conn.CreateCommand();
+        // SELECT users.id_user FROM users ORDER BY users.id_user DESC LIMIT 1;
+        cmd.CommandText = "SELECT users.id_user FROM users ORDER BY users.id_user DESC LIMIT 1;";
+        Debug.Log(cmd.CommandText);
+        IDataReader reader = cmd.ExecuteReader();
+
+        int userID = 0;
+
+        while(reader.Read())
+        {
+            userID = reader.GetInt32(0);
+        }
+
+        return userID;
+    }
+
+    public int GenerateSave(int user_id)
+    {
+        IDbCommand cmd = conn.CreateCommand();
+        //INSERT INTO savedgames (time, size, money, id_user) VALUES (0, 5, 0, 1);
+        cmd.CommandText = "INSERT INTO savedgames (time, size, money, id_user) VALUES (0, 5, 0, " + user_id + ");";
+        Debug.Log(cmd.CommandText);
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = "SELECT savedgames.id_savedgame FROM savedgames ORDER BY savedgames.id_savedgame DESC LIMIT 1;";
+        IDataReader reader = cmd.ExecuteReader();
+
+        int saveID = 0;
+
+        while (reader.Read())
+        {
+            saveID = reader.GetInt32(0);
+        }
+
+        return saveID;
+    }
+
+    public void GenerateCellsSave(int save_id)
+    {
+        IDbCommand cmd = conn.CreateCommand();
+
+        for (int i = 0; i < 25; i++)
+        {
+            int x = (int)i / 5;
+            int y = (int)i % 5;
+
+            //INSERT INTO savedgames_cells (x, y, growtime, id_plant, id_savedgame) VALUES (0, 0, 0, 1, 1);
+            cmd.CommandText = "INSERT INTO savedgames_cells (x, y, growtime, id_plant, id_savedgame) VALUES (" + x + ", " + y + ", 0, 1, " + save_id + ");";
+            Debug.Log(cmd.CommandText);
+            cmd.ExecuteNonQuery();
+        }
+        
     }
 }

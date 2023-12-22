@@ -43,7 +43,7 @@ CREATE TABLE savedgames_cells (
 	x INT NOT NULL,
 	y INT NOT NULL,
 	growtime FLOAT NOT NULL,
-	id_plant INT UNSIGNED,
+	id_plant INT UNSIGNED NOT NULL,
 	id_savedgame INT UNSIGNED NOT NULL,
 	FOREIGN KEY (id_plant) REFERENCES plants(id_plant),
 	FOREIGN KEY (id_savedgame) REFERENCES savedgames(id_savedgame)
