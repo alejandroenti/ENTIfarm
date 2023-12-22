@@ -33,8 +33,13 @@ public class SaveClickable : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerDown(PointerEventData eventData)
     {
         imageBackground.color = selectedColorBackground;
+
         GameManager._GAMEMANAGER.SetSaveID(saveSelected.GetSaveID());
         GameManager._GAMEMANAGER.SetUserID(saveSelected.GetUserID());
+        GameManager._GAMEMANAGER.SetGameTime(saveSelected.GetGameTime());
+        GameManager._GAMEMANAGER.SetCurrency(saveSelected.GetMoney());
+
+        GameManager._GAMEMANAGER.LoadSave();
     }
 
     public void SetSave(Save newSave) => saveSelected = newSave;

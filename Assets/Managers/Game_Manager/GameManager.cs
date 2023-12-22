@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Crops Object")]
     [SerializeField] private GameObject cropsObject;
+    
+    [Header("User Plants Object")]
+    [SerializeField] private GameObject userPlantsObject;
 
     [Header("Save Selector Menu Object")]
     [SerializeField] private GameObject saveMenuObject;
@@ -23,7 +26,6 @@ public class GameManager : MonoBehaviour
     private int userID = 1;
     private int saveID = 1;
     private float currency;
-    private Dictionary<int, int> plantsDictionary;
 
     private GameObject plant;
 
@@ -44,9 +46,6 @@ public class GameManager : MonoBehaviour
             plantSprite = null;
             plantGrowTime = -1f;
             plantClickableScript = null;
-
-            plantsDictionary = new Dictionary<int, int>();
-            FillToNullPlantDictionary();
 
             currency = 0f;
         }
@@ -73,6 +72,11 @@ public class GameManager : MonoBehaviour
     public float GetPlantGrowTime() => plantGrowTime;
 
     public float GetCurrency() => currency;
+    public void SetCurrency(float money)
+    {
+        currency = money;
+        updateCurrencyScript.UpdateCurrencyText(currency);
+    }
     public void AddCurrency(float amount)
     {
         currency += amount;
@@ -83,10 +87,6 @@ public class GameManager : MonoBehaviour
         currency -= amount;
         updateCurrencyScript.UpdateCurrencyText(currency);
     }
-
-    public void AddPlantInDictionary(int currentPlant) => plantsDictionary[currentPlant]++;
-    public void SubstractPlantInDictionary(int currentPlant) => plantsDictionary[currentPlant]++;
-    public int GetPlantInDictionary(int currentPlant) => plantsDictionary[currentPlant];
 
     public void SubstractPlantQuantity(GameObject plant)
     {
@@ -128,17 +128,11 @@ public class GameManager : MonoBehaviour
         generateUserPlantsScript.UpdateList();
     }
 
-    private void FillToNullPlantDictionary()
+    public void OpenSaveSelector()
     {
-        List<Plant> plants = Database._DATABASE.GetPlants();
-
-        for (int i = 0; i < plants.Count; i++)
-        {
-            plantsDictionary[plants[i].GetPlantID()] = 0;
-        }
+        saveMenuObject.SetActive(true);
+        SaveGame();
     }
-
-    public void OpenSaveSelector() => saveMenuObject.SetActive(true);
     public void CloseSaveSelector() => saveMenuObject.SetActive(false);
 
     public void SaveGame()
@@ -148,6 +142,36 @@ public class GameManager : MonoBehaviour
 
     public void LoadSave()
     {
+        List<CellsSave> cells = Database._DATABASE.LoadGame(saveID);
 
+        Debug.Log(cells.Count);
+
+        for (int j = 0; j < userPlantsObject.transform.childCount; j++)
+        {
+            UpdateQuantity updateQuantityScript = userPlantsObject.transform.GetChild(j).GetChild(3).GetComponent<UpdateQuantity>();
+            updateQuantityScript.RestartQuantity();
+        }
+
+        for (int i = 0; i < cells.Count; i++)
+        {
+            Debug.Log("Loading " + (int)i / 5 + ", " + (int)i % 5 + " - Plant ID: " + cells[i].GetPlantID());
+            if (cells[i].GetPlantID() != 1)
+            {
+                for (int j = 0; j < userPlantsObject.transform.childCount; j++)
+                {
+                    if (userPlantsObject.transform.GetChild(j).GetComponent<UserPlantClickable>().GetPlantSelected().GetPlantID() == cells[i].GetPlantID())
+                    {
+                        SelectPlant(userPlantsObject.transform.GetChild(j).gameObject);
+                        cropsObject.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().SetCurrentPlantObject(userPlantsObject.transform.GetChild(j).gameObject);
+                        cropsObject.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().LoadPlant(cells[i].GetTime());
+                        cropsObject.transform.GetChild(i).GetComponent<Outline>().enabled = true;
+                        ResetPlantSelected();
+                        break;
+                    }
+                }
+            }
+        }
+
+        CloseSaveSelector();
     }
 }

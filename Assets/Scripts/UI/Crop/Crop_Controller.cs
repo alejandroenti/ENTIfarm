@@ -43,13 +43,13 @@ public class Crop_Controller : MonoBehaviour
     {
         currentPlant = GameManager._GAMEMANAGER.GetPlantSelected().GetComponent<UserPlantClickable>().GetPlantSelected();
         transform.GetChild(0).gameObject.SetActive(true);
-        GameManager._GAMEMANAGER.AddPlantInDictionary(currentPlant.GetPlantID());
+        //GameManager._GAMEMANAGER.AddPlantInDictionary(currentPlant.GetPlantID());
         cropGrowScript.Plant();
     }
 
     public void Collect()
     {
-        GameManager._GAMEMANAGER.SubstractPlantInDictionary(currentPlant.GetPlantID());
+        //GameManager._GAMEMANAGER.SubstractPlantInDictionary(currentPlant.GetPlantID());
         currentPlant = null;
         cropGrowScript.Collect();
     }

@@ -1732,7 +1732,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generateUserPlantsScript: {fileID: 1607003824}
   cropsObject: {fileID: 1246546160}
-  saveMenuObject: {fileID: 0}
+  userPlantsObject: {fileID: 1607003821}
+  saveMenuObject: {fileID: 1812777570}
 --- !u!1 &818568776
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,7 +3026,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1180388819}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786296643}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OpenSaveSelector
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1180388819
 MonoBehaviour:
   m_ObjectHideFlags: 0

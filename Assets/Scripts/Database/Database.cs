@@ -2,7 +2,6 @@ using System.Data;
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class Database : MonoBehaviour
 {
@@ -50,7 +49,7 @@ public class Database : MonoBehaviour
 
         // Nos conectamos a la base de datos y ejecutamos el comando de recibir todas las plantas
         IDbCommand cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT * FROM plants;";
+        cmd.CommandText = "SELECT * FROM plants WHERE plants.id_plant > 1;";
         IDataReader reader = cmd.ExecuteReader();
 
 
@@ -89,7 +88,7 @@ public class Database : MonoBehaviour
 
         // Nos conectamos a la base de datos y ejecutamos el comando de recibir todas las plantas
         IDbCommand cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT plants.id_plant, plants.plant, plants.time, plants.quantity * COUNT(*) as total_quantity, plants.sell, plants.buy FROM plants_users LEFT JOIN plants ON plants.id_plant = plants_users.id_plant WHERE plants_users.id_user = 1 GROUP BY plants.id_plant;";
+        cmd.CommandText = "SELECT plants.id_plant, plants.plant, plants.growtime, plants.quantity * COUNT(*) as total_quantity, plants.sell, plants.buy FROM plants_users LEFT JOIN plants ON plants.id_plant = plants_users.id_plant WHERE plants_users.id_user = 1 GROUP BY plants.id_plant;";
         IDataReader reader = cmd.ExecuteReader();
 
         while (reader.Read())
@@ -110,31 +109,47 @@ public class Database : MonoBehaviour
     public void SaveGame(float gameTime, float currency, GameObject crops)
     {
         IDbCommand cmd = conn.CreateCommand();
-
-  
-        
-            //UPDATE savedgames SET time = 7.30, money = 60, saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;
-            cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;";
-            cmd.ExecuteNonQuery();
-            Debug.Log("Game Settings Saved!");
+        //UPDATE savedgames SET time = 7.30, money = 60, saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;
+        cmd.CommandText = "UPDATE savedgames SET time = " + gameTime.ToString().Replace(",", ".") + ", money = " + currency + ", saved = CURRENT_TIMESTAMP WHERE savedgames.id_user = 1;";
+        cmd.ExecuteNonQuery();
+        Debug.Log("Game Settings Saved!");
         
 
         for (int i = 0; i < crops.transform.childCount; i++)
         {
-            string plantID = "NULL";
+            string plantID = "1";
 
             if (crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetPlant() != null) {
                 plantID = crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetPlant().GetPlantID().ToString();
             }
 
-
-                // UPDATE savedgames_cells SET time = 23, id_plant = 1 WHERE savedgames_cells.id_savedgame = 1 AND savedgames_cells.x = 2 AND savedgames_cells.y = 3;
-                cmd.CommandText = "UPDATE savedgames_cells SET time = " + crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetCropGrowTimer().ToString().Replace(",", ".") + ", id_plant = " + plantID + " WHERE savedgames_cells.id_savedgame = " + GameManager._GAMEMANAGER.GetSaveID() + " AND savedgames_cells.x = " + (int)i / 5 + " AND savedgames_cells.y = " + i % 5 + ";";
-                cmd.ExecuteNonQuery();
-                Debug.Log("Cell " + (int)i / 5 + ", " + i % 5 + " Saved!");
+            // UPDATE savedgames_cells SET time = 23, id_plant = 1 WHERE savedgames_cells.id_savedgame = 1 AND savedgames_cells.x = 2 AND savedgames_cells.y = 3;
+            cmd.CommandText = "UPDATE savedgames_cells SET growtime = " + crops.transform.GetChild(i).GetChild(0).GetComponent<CropGrow>().GetCropGrowTimer().ToString().Replace(",", ".") + ", id_plant = " + plantID + " WHERE savedgames_cells.id_savedgame = " + GameManager._GAMEMANAGER.GetSaveID() + " AND savedgames_cells.x = " + (int)i / 5 + " AND savedgames_cells.y = " + i % 5 + ";";
+            cmd.ExecuteNonQuery();
+            Debug.Log("Cell " + (int)i / 5 + ", " + i % 5 + " Saved!");
             
         }
 
         Debug.Log("Game Saved");
+    }
+
+    public List<CellsSave> LoadGame(int saveID)
+    {
+        // SOLO DEBEMOS CARGAR LOS CULTIVOS DE LA PARTIDA, YA QUE UTILIZAMOS LA PARTIDA EN SI DE LA LISTA PARA PODER ESCOGERLA
+
+        List<CellsSave> cells = new List<CellsSave>();
+
+        // Nos conectamos a la base de datos y ejecutamos el comando de recibir todas las plantas
+        IDbCommand cmd = conn.CreateCommand();
+        // SELECT savedgames_cells.x, savedgames_cells.y, savedgames_cells.time, savedgames_cells.id_plant FROM savedgames_cells WHERE savedgames_cells.id_savedgame = 1;
+        cmd.CommandText = "SELECT savedgames_cells.x, savedgames_cells.y, savedgames_cells.growtime, savedgames_cells.id_plant FROM savedgames_cells WHERE savedgames_cells.id_savedgame = " + GameManager._GAMEMANAGER.GetSaveID();
+        IDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            cells.Add(new CellsSave(reader.GetInt32(0), reader.GetInt32(1), reader.GetFloat(2), reader.GetInt32(3)));
+        }
+
+        return cells;
     }
 }

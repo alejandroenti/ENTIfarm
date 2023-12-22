@@ -21,5 +21,6 @@ public class BuyPlant : MonoBehaviour
 
         GameManager._GAMEMANAGER.SubstractCurrency(currentPlant.GetBuyPrice());
         Database._DATABASE.BuyPlant(currentPlant.GetPlantID());
+        GameManager._GAMEMANAGER.SaveGame();
     }
 }

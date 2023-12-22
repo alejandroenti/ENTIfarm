@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class Save : MonoBehaviour
+public class Save
 {
     private int saveID;
     private float gameTime;
